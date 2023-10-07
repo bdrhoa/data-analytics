@@ -124,6 +124,28 @@ This approach is straightforward and widely used in practice. You calculate the 
 ### Comparing chi-square statistic to the critical value
 
 This is an alternative method. You compare the calculated chi-square statistic to the critical value from the chi-square distribution given the degrees of freedom and chosen significance level. If the calculated chi-square statistic is greater than the critical value, you reject the null hypothesis.
+Code Reference:https://chat.openai.com/share/918b9a6d-7092-4924-8535-b2c91627bea8
+```
+# Define the significance level (e.g., 0.05)
+alpha <- 0.05
+
+# Degrees of freedom (df) from your chi-square test
+df <- 2  # Replace with the appropriate df from your test
+
+# Calculate the critical value from the chi-square distribution table
+critical_value <- qchisq(1 - alpha, df)
+
+# Your calculated chi-square statistic from the test
+calculated_chi_square <- 1.5858  # Replace with your calculated value
+
+# Compare the calculated chi-square statistic with the critical value
+if (calculated_chi_square > critical_value) {
+  cat("There is a significant difference. Reject the null hypothesis.\n")
+} else {
+  cat("There is no significant difference. Fail to reject the null hypothesis.\n")
+}
+
+```
 
 ### Why p-value comparison is more common
 
@@ -213,3 +235,156 @@ Each of these resources can provide a deeper understanding of the chi-square tes
 ### Conclusion
 
 While the chi-square test is widely used and easy to perform, understanding its limitations and assumptions is crucial for interpreting the results accurately. Always consider these factors and, if necessary, look for alternative methods or supplementary analyses to validate your findings.
+
+### Assumptions
+Reference:https://chat.openai.com/share/ff59f22a-a3cc-4a7c-8cb3-23a0aab8e4c6
+```
+# Sample data for ice cream flavor preference and gender
+ice_cream_data <- data.frame(
+  Gender = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"),
+  Flavor = c("Vanilla", "Vanilla", "Chocolate", "Chocolate", "Strawberry", "Strawberry", "Other", "Other")
+)
+
+# Create a contingency table
+contingency_table <- table(ice_cream_data)
+
+# Check the contingency table
+print(contingency_table)
+
+# Calculate expected values for the chi-square test
+expected_values <- chisq.test(contingency_table)$expected
+
+# Check if assumptions are met
+assumption1 <- sum(expected_values >= 5) / length(expected_values) >= 0.8
+assumption2 <- all(expected_values >= 1)
+sample_size_needed <- sum(dim(contingency_table)) * 5
+
+cat("Assumption 1 (80% cells with expected >= 5): ", assumption1, "\n")
+cat("Assumption 2 (No expected < 1): ", assumption2, "\n")
+cat("Sample size needed to meet assumptions: ", sample_size_needed, "\n")
+
+```
+
+### Stacked Bar Chart
+Reference: https://chat.openai.com/share/9c85ebc6-78a4-49bd-98b7-b8a655e728f7
+```
+# Load required libraries
+library(ggplot2)
+
+# Sample Data
+data <- data.frame(
+  Gender = factor(rep(c("Male", "Female", "Non-Binary"), times = c(100, 100, 100))),
+  Readmis = factor(sample(c("Yes", "No"), 300, replace = TRUE))
+)
+
+# Print the data
+print(head(data))
+
+# Creating a contingency table
+contingency_table <- with(data, table(Gender, Readmis))
+
+# Print the contingency table
+print(contingency_table)
+
+# Performing Chi-Square Test of Independence
+test_result <- chisq.test(contingency_table)
+
+# Print the test result
+print(test_result)
+
+# Plotting a Stacked Bar Chart using ggplot2
+ggplot(data, aes(x=Gender, fill=Readmis)) +
+  geom_bar(position="stack") +
+  labs(title="Stacked Bar Chart of Gender vs Readmission",
+       x="Gender",
+       y="Frequency") +
+  scale_fill_manual(values=c("red", "blue")) +
+  theme_minimal()
+
+```
+### Scatter Plot
+Reference:https://chat.openai.com/share/0944ff40-646b-47dd-9fd2-1a6d83aebf28
+```
+# Load required libraries
+library(ggplot2)
+
+# Generate sample data
+set.seed(123)
+age <- rnorm(100, mean = 35, sd = 10) # normally distributed age data
+income <- exp(rnorm(100, mean = log(50000), sd = 0.7)) # log-normally distributed income data
+
+# Calculate Spearman's rank correlation coefficient
+cor.test(age, income, method = "spearman")
+
+# Create a scatter plot
+ggplot(data = data.frame(age, income), aes(x = age, y = income)) +
+  geom_point() +
+  geom_smooth(method = "loess", color = "blue") + # Add a smoothing line
+  labs(x = "Age", y = "Income", title = "Scatter Plot of Age vs Income") +
+  theme_minimal()
+
+```
+### Histogram, Box Plot, Bar Chart, and Pie Chart
+Reference: https://chat.openai.com/share/b93dd976-84d5-4562-bd5c-f1e8cc6736a4
+```
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+
+# Create a sample data frame
+data <- data.frame(
+  age = c(21, 35, 40, 50, 65, 29, 31, 55, NA, 60),
+  income = c(50000, NA, 75000, 60000, 80000, 56000, 48000, 71000, 68000, 62000),
+  gender = c("Male", "Female", "Male", NA, "Female", "Male", "Female", "Female", "Male", "Female"),
+  region = c("North", "South", "East", "West", "East", "South", "North", "East", "West", NA)
+)
+
+# Clean and prepare data: remove NA values for demonstration simplicity
+cleaned_data <- na.omit(data)
+
+# Univariate analysis and visualization
+
+# Continuous variable 1: Age
+cat("Age Summary Statistics:\n")
+print(summary(cleaned_data$age))
+
+# Plotting histogram for Age
+ggplot(cleaned_data, aes(x=age)) +
+  geom_histogram(binwidth=10, fill="skyblue", color="black") +
+  ggtitle("Age Distribution") +
+  xlab("Age") +
+  ylab("Frequency")
+
+# Continuous variable 2: Income
+cat("\nIncome Summary Statistics:\n")
+print(summary(cleaned_data$income))
+
+# Plotting boxplot for Income
+ggplot(cleaned_data, aes(y=income)) +
+  geom_boxplot(fill="pink") +
+  ggtitle("Income Distribution") +
+  ylab("Income")
+
+# Categorical variable 1: Gender
+cat("\nGender Frequency:\n")
+print(table(cleaned_data$gender))
+
+# Plotting bar chart for Gender
+ggplot(cleaned_data, aes(x=gender, fill=gender)) +
+  geom_bar() +
+  ggtitle("Gender Distribution") +
+  xlab("Gender") +
+  ylab("Frequency")
+
+# Categorical variable 2: Region
+cat("\nRegion Frequency:\n")
+print(table(cleaned_data$region))
+
+# Plotting pie chart for Region
+region_freq <- as.data.frame(table(cleaned_data$region))
+ggplot(region_freq, aes(x="", y=Freq, fill=Var1)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y") +
+  ggtitle("Region Distribution")
+
+```
