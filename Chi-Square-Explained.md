@@ -154,3 +154,62 @@ if (p_value < alpha) {
 } else {
   cat("There is no significant difference. Fail to reject the null hypothesis.\n")
 }
+```
+
+### Limitations
+
+The chi-square test is a powerful tool for analyzing categorical data, but it has several limitations and assumptions that need to be considered. Here are some of the key limitations:
+
+### 1. **Categorical Data Only**
+The chi-square test can only be used for categorical or nominal data. It is not appropriate for continuous or ordinal data unless they have been categorized.
+
+### 2. **Expected Frequency Assumption**
+Every cell in the contingency table should have an expected frequency of 5 or more for the chi-square approximation to be valid. This is especially a concern in small samples or when there are many categories.
+
+### 3. **Independence of Observations**
+The observations should be independent of each other. This means that the sampling method should be simple random sampling. This assumption is violated if the data are dependent.
+
+### 4. **Fixed Marginals**
+In the test of homogeneity, it is assumed that the marginal totals are fixed, which is often not the case in real-world data.
+
+### 5. **Mutually Exclusive Categories**
+Each participant/observation should belong to one and only one category for both variables. Overlapping or nested categories can violate the assumptions of the test.
+
+### 6. **Large Sample Size**
+Chi-square tests can be sensitive to sample size. A very large sample size can detect a statistically significant result even for a small effect size or deviation from the expected frequencies. On the other hand, a small sample size might not provide a reliable result.
+
+### 7. **No Information on Strength or Direction of Association**
+The test indicates whether an association exists between the categorical variables but does not provide information on the strength or direction of the association.
+
+### 8. **Assumption of Randomness**
+The data should be collected randomly to ensure that the sample is representative of the population. Any bias in data collection can lead to inaccurate results.
+
+### 9. **Two-Dimensional Tables**
+The traditional chi-square tests are applicable for two-dimensional tables. For multi-dimensional tables, the interpretation becomes complex and might require other sophisticated methods or modifications.
+
+### 10. **Cannot Test for Causal Relationships**
+Like many statistical tests, the chi-square test can indicate an association between two variables but cannot prove causation.
+
+### References
+
+1. **Agresti, A. (2007). An Introduction to Categorical Data Analysis (2nd ed.). Wiley-Interscience.**
+    - This comprehensive book offers detailed insights into methods for categorical data analysis, including the chi-square test, and discusses its assumptions and limitations.
+
+2. **McDonald, J.H. (2014). Handbook of Biological Statistics (3rd ed.). Sparky House Publishing.**
+    - This handbook provides practical insights into statistical methods for biological data, including a section on the chi-square test, and discusses when and how to use it effectively.
+
+3. **Siegel, S., & Castellan, N. J. (1988). Nonparametric Statistics for The Behavioral Sciences (2nd ed.). McGraw-Hill.**
+    - This classic text offers a deep dive into nonparametric statistics, including the chi-square test, and is a great resource for understanding the limitations and applications of these methods in behavioral sciences.
+
+4. **Everitt, B. S., & Skrondal, A. (2010). The Cambridge Dictionary of Statistics (4th ed.). Cambridge University Press.**
+    - A dictionary of statistical terms, including the chi-square test, offering concise definitions and explanations which can be a helpful resource for understanding the limitations associated with the test.
+
+5. **Field, A. (2013). Discovering Statistics Using IBM SPSS Statistics (4th ed.). Sage Publications.**
+    - Andy Field's book is a comprehensive guide to understanding statistics using SPSS, including a detailed section on chi-square tests, their assumptions, and limitations.
+
+Each of these resources can provide a deeper understanding of the chi-square test, its applications, and the constraints and considerations that should be taken into account when interpreting the results of the test.
+
+
+### Conclusion
+
+While the chi-square test is widely used and easy to perform, understanding its limitations and assumptions is crucial for interpreting the results accurately. Always consider these factors and, if necessary, look for alternative methods or supplementary analyses to validate your findings.
