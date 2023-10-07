@@ -46,7 +46,7 @@ The expected frequency for each cell is calculated as
 
 $$ E_{ij} = \frac{{\text{{row total}} \times \text{{column total}}}}{\text{{grand total}}}$$
 
-For example, for Male-Tea, the expected frequency is $$ ( \frac{{40 \times 35}}{90} = 15.56 )$$.
+For example, for Male-Tea, the expected frequency is $$( \frac{{40 \times 35}}{90} = 15.56 )$$.
 
 We'll compute the chi-square statistic using the formula above.
 
