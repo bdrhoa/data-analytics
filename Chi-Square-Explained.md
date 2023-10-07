@@ -1,3 +1,5 @@
+Reference: https://chat.openai.com/share/8b953344-98a2-4431-a765-66a01affd28f
+
 The chi-square test is a statistical test that determines if there is a significant association between two categorical variables in a sample. It is used in various fields, including biology, marketing, social sciences, and more, for tasks such as testing independence, homogeneity, and goodness of fit.
 
 ### Types of Chi-Square Tests
@@ -12,14 +14,16 @@ The chi-square test is a statistical test that determines if there is a signific
 
 The chi-square statistic is calculated as
 
-\[
+$$
 X^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
-\]
+$$
 
-where:
-- \(X^2\): Chi-square statistic
-- \(O_{ij}\): Observed frequency
-- \(E_{ij}\): Expected frequency if variables are independent
+where: 
+
+$$(X^2): Chi-square statistic$$
+$$(O_{ij}): Observed frequency$$
+$$(E_{ij}): Expected frequency if variables are independent$$ 
+
 
 ### Example
 
@@ -39,11 +43,10 @@ We will calculate the expected frequencies under the assumption that Gender and 
 
 The expected frequency for each cell is calculated as
 
-\[
-E_{ij} = \frac{{\text{{row total}} \times \text{{column total}}}}{\text{{grand total}}}
-\]
 
-For example, for Male-Tea, the expected frequency is \( \frac{{40 \times 35}}{90} = 15.56 \).
+$$ E_{ij} = \frac{{\text{{row total}} \times \text{{column total}}}}{\text{{grand total}}}$$
+
+For example, for Male-Tea, the expected frequency is $$ ( \frac{{40 \times 35}}{90} = 15.56 )$$.
 
 We'll compute the chi-square statistic using the formula above.
 
@@ -51,7 +54,7 @@ Let's calculate it.
 
 ### Results
 
-With a p-value of \(1.30 \times 10^{-9}\), which is less than the common alpha level of 0.05, we reject the null hypothesis that gender and preference are independent. This means there is a significant association between gender and preference for tea or coffee in the sample data.
+With a p-value of $$(1.30 \times 10^{-9})$$, which is less than the common alpha level of 0.05, we reject the null hypothesis that gender and preference are independent. This means there is a significant association between gender and preference for tea or coffee in the sample data.
 
 ### References
 
