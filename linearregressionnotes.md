@@ -80,6 +80,7 @@ final.model <- step(initial.model, direction = "backward")
 
 # Display summary of final model
 summary(final.model)
+```
 Explanation:
 •	mtcars: This is a built-in R dataset. You can replace this with your own dataset.
 •	lm(mpg ~ ., data = mtcars): This fits a linear model predicting mpg using all other variables in the mtcars dataset (denoted by .).
@@ -164,6 +165,7 @@ model <- lm(y ~ x1 + x2, data = data)
 
 # Display the model summary
 summary(model)
+```
 In this example, x2 is a categorical variable with two levels, "A" and "B". The lm() function will handle it appropriately, and you'll see it reflected in the model summary.
 Important Points
 1.	Factor Variables: Ensure that categorical variables are converted to factor variables using as.factor() if they are not already. R often does this automatically, but it's good practice to ensure your data is correctly typed.
@@ -184,6 +186,7 @@ If you still want to manually one-hot encode your categorical variables, you can
 ```
 # Assuming 'data' is your data frame and 'cat_variable' is the categorical variable you want to one-hot encode
 encoded_data <- model.matrix(~cat_variable - 1, data)
+```
 This will give you a matrix with binary columns for each level of the categorical variable (except the reference level).
 Conclusion
 In the context of linear regression in R with lm(), manually one-hot encoding categorical variables wouldn’t typically lead to a performance improvement, because R handles factor variables appropriately by default. Always consider the specific context, model, and data when deciding on the appropriate encoding method. Also, remember to validate the model using techniques like cross-validation to assess its performance objectively.
@@ -214,6 +217,7 @@ library(car)
 
 # Calculate VIF
 vif(initial.model)
+```
 Examine the VIF values and consider removing or adjusting variables with high VIF values and then re-running the stepwise selection process.
 Remember to also consider the context and use domain knowledge in conjunction with statistical methods to select the appropriate model and variables.
 The example solution gets this error: Error in vif.default(initial.model) : there are aliased coefficients in the mode
@@ -244,6 +248,7 @@ revised.model <- lm(Y ~ X1 + X2, data = yourdata)
 # Now you can calculate the VIF for the revised model
 library(car)
 vif(revised.model)
+```
 Replace "Y", "X1", and "X2" with your actual dependent and independent variables, and "yourdata" with your actual data frame.
 Additional Steps
 1.	Interaction Terms and Polynomial Terms: Be careful with interaction terms and polynomial terms; they can sometimes lead to multicollinearity.
@@ -264,10 +269,12 @@ Solutions:
 ```
 # Assuming Y is the dependent variable and . indicates all other variables as predictors
 initial.model <- lm(Y ~ ., data = yourdata)
+```
 Replace Y with your dependent variable and yourdata with your actual dataset name.
 2.	Check the Environment: Use ls() to list all objects currently in the environment to check if initial.model is available.
 ```
 ls()
+```
 3.	Check for Errors in Previous Code: Make sure that the code that was supposed to create initial.model ran without errors and actually created the object.
 Example of Recreating the Model:
 Here’s a step-by-step example assuming you need to recreate initial.model.
@@ -275,14 +282,17 @@ Here’s a step-by-step example assuming you need to recreate initial.model.
 ```
 # Replace this with loading your actual dataset
 yourdata <- read.csv("yourdata.csv")
+```
 2.	Create the initial model:
 ```
 # Replace Y with your actual dependent variable
 initial.model <- lm(Y ~ ., data = yourdata)
+```
 3.	Now, you can proceed to use initial.model in your further analysis, like calculating VIF or doing stepwise regression.
 ```
 library(car)
 vif(initial.model)
+```
 Make sure to replace placeholders like Y and yourdata with your actual variable names and dataset. Ensure that each step is executed without error, and the initial.model object should be available for subsequent analysis.
 If a dataset has 10000 rows, how many rows need to be included in the lm() call to create the initial.model?
 ChatGPT
@@ -293,6 +303,7 @@ Here are common approaches:
 •	Code Example:
 ```
 initial.model <- lm(Y ~ ., data = yourdata)
+```
 •	Note: This approach doesn’t allow you to validate the model’s performance on unseen data.
 2. Split Data into Training and Testing Sets:
 •	Commonly, data is split into a training set to fit the model and a test set to evaluate its performance. For example, an 80-20 split might use 8,000 rows for training and 2,000 for testing.
@@ -303,6 +314,7 @@ trainIndex <- sample(1:nrow(yourdata), 0.8 * nrow(yourdata))
 trainData <- yourdata[trainIndex, ]
 testData <- yourdata[-trainIndex, ]
 initial.model <- lm(Y ~ ., data = trainData)
+```
 •	Note: Adjust the split ratio based on your specific needs and dataset size.
 3. Cross-Validation:
 •	Another approach is to use cross-validation (like k-fold cross-validation), where the dataset is divided into k subsets, and the model is trained k times, each time using k-1 subsets as training data and the remaining one as the test set.
@@ -324,6 +336,7 @@ data(mtcars)
 
 # Fit the initial model using all variables
 initial.model <- lm(mpg ~ ., data = mtcars)
+```
 2. Perform Backward Elimination:
 ```
 # Load the MASS package for the stepAIC function
@@ -335,16 +348,19 @@ library(MASS)
 
 # Perform backward elimination
 final.model <- stepAIC(initial.model, direction = "backward")
+```
 3. Check the Summary of the Final Model:
 ```
 # Print the summary of the final model
 summary(final.model)
+```
 4. Use the Coefficients in the Final Equation:
 The coefficients for the categorical variable will be included in the final model summary. Use these coefficients to create the final equation.
 Here is a hypothetical example if the final model includes a categorical variable with two levels (like am in mtcars):
 ```
 # Print coefficients
 coefficients(final.model)
+```
 5. Create the Final Equation:
 Assuming the output gives coefficients for wt and am1 (where am1 is a dummy variable for manual transmission), the final equation might look something like this:
 mpg=β0+β1×wt+β2×am1\text{mpg} = \beta_0 + \beta_1 \times \text{wt} + \beta_2 \times \text{am1}mpg=β0+β1×wt+β2×am1
@@ -354,6 +370,7 @@ In R, you can predict new values using this model like so:
 newdata <- data.frame(wt = 2.5, am = 1)  # Replace with actual new data
 predicted.mpg <- predict(final.model, newdata, type = "response")
 print(predicted.mpg)
+```
 Explanation:
 •	The lm() function automatically encodes categorical variables using one-hot encoding, excluding one level as the reference category (e.g., am0 for automatic transmission).
 •	The stepAIC() function then selects the most significant variables, which can include one or more levels of a categorical variable.
@@ -378,24 +395,29 @@ data(mtcars)
 
 # Convert the 'am' variable to a factor (categorical) variable
 mtcars$am <- as.factor(mtcars$am)
+```
 2. Fit the Initial Model:
 ```
 # Fit the initial model using all variables
 initial.model <- lm(mpg ~ ., data = mtcars)
+```
 3. Perform Backward Elimination:
 ```
 # Perform backward elimination
 final.model <- stepAIC(initial.model, direction = "backward")
+```
 4. Check the Summary of the Final Model:
 ```
 # Print the summary of the final model
 summary(final.model)
+```
 5. Extract Coefficients and Create Final Equation:
 The coefficients, including those for categorical variables, can be extracted and used in the final equation.
 ```
 # Extract coefficients
 coeffs <- coefficients(final.model)
 print(coeffs)
+```
 Assuming that the am variable (automatic/manual transmission) is included in the final model, the model equation might look like:
 mpg=β0+β1×wt+β2×am1\text{mpg} = \beta_0 + \beta_1 \times \text{wt} + \beta_2 \times \text{am1}mpg=β0+β1×wt+β2×am1
 6. Predict with the Final Model:
@@ -407,6 +429,7 @@ newdata <- data.frame(wt = 2.8, am = factor(1, levels = c(0, 1)))  # Assuming 1 
 # Predict mpg for the new data
 predicted.mpg <- predict(final.model, newdata, type = "response")
 print(predicted.mpg)
+```
 Explanation:
 •	We first converted the am variable to a factor to treat it as a categorical variable.
 •	The lm() function is used to fit the initial model, and stepAIC() from the MASS package for backward elimination.
@@ -438,11 +461,13 @@ final.model <- stepAIC(initial.model, direction = "both")
 
 # Print the summary of the final model
 summary(final.model)
+```
 2. Understanding the Encoding:
 R automatically uses one-hot encoding for factor variables, creating dummy variables for each level except the first one (which becomes the reference category). You can check the levels and their encoding using the levels() function.
 ```
 # Check the levels of the 'am' factor
 levels(mtcars$am)
+```
 3. Making Predictions with New Data:
 When making predictions, you need to provide values for the dummy variables that R created. For a binary categorical variable, this is straightforward, as each level corresponds to one of the dummy variables.
 ```
@@ -453,6 +478,7 @@ newdata <- data.frame(wt = 2.8, am = factor(1, levels = c(0, 1)))
 # Predict mpg for new data
 predicted.mpg <- predict(final.model, newdata)
 print(predicted.mpg)
+```
 Explanation:
 •	The am variable is converted into a factor, and lm() handles the encoding.
 •	With levels(mtcars$am), you can see how the am variable is encoded. For binary factors, it typically uses "0" and "1".
@@ -472,12 +498,14 @@ Better Approaches for Encoding Ordinal Variables
 ```
 # Convert an ordinal factor to integer
 mtcars$gear <- as.integer(as.factor(mtcars$gear))
+```
 This approach maintains the order of the categories but assumes equal spacing between levels, which might not always be appropriate.
 2.	Custom Encoding: Assign custom numeric values to reflect the order and possibly unequal spacing between levels.
 ```
 # Assuming 'rating' is an ordinal variable in your dataset
 encoding <- setNames(c(1, 2, 4), levels(yourdata$rating))
 yourdata$rating <- as.numeric(encoding[yourdata$rating])
+```
 In this example, replace "yourdata" with your dataframe's name and "rating" with your ordinal variable's name. Adjust the numeric values in the c(1, 2, 4) vector to reflect the actual spacing between levels that you want to model.
 When to Use One-Hot Encoding
 •	Categorical Variables: One-hot encoding is appropriate for nominal categorical variables where there's no inherent order to the categories.
@@ -498,6 +526,7 @@ if(!requireNamespace("dplyr", quietly = TRUE)) {
 
 # Load the dplyr package
 library(dplyr)
+```
 2. Recode the Complication_risk Variable:
 Assuming your data frame is named yourdata and you want to overwrite the existing Complication_risk variable:
 ```
@@ -507,11 +536,13 @@ yourdata <- yourdata %>%
                                     "Low" = 1,
                                     "Medium" = 2,
                                     "High" = 3))
+```
 3. Confirm the Recoding:
 You can use the table() function or similar to confirm that the recoding has been done correctly.
 ```
 # View the recoded variable
 table(yourdata$Complication_risk)
+```
 Explanation:
 •	The %>% operator is a pipe operator that feeds the result from the left side to the next operation on the right side.
 •	The mutate() function is used to modify or create a new variable in the dataframe.
@@ -528,6 +559,7 @@ yourdata <- yourdata %>%
                                     "Low" = 1L, 
                                     "Medium" = 2L, 
                                     "High" = 3L))
+```
 Explanation:
 •	We are using the recode() function from the dplyr package to change the values of the Complication_risk variable.
 •	The original string values "Low", "Medium", and "High" are quoted as they are character strings, and are being recoded to integers 1, 2, and 3 respectively.
@@ -544,6 +576,7 @@ yourdata <- yourdata %>%
                                            "Low" = 1L, 
                                            "Medium" = 2L, 
                                            "High" = 3L))
+```
 I appreciate your feedback, and it’s a helpful reminder of the importance of being specific with function calls, especially when multiple packages are loaded that might have functions with the same name.
 Two of the assumptions of multiple linear regress are: (1) Second, the multiple linear regression analysis requires that the errors between observed and predicted values (i.e., the residuals of the regression) should be normally distributed. And (2) homoscedasticity. Please explain and contrast those two assumptions.
 ChatGPT
@@ -590,6 +623,7 @@ model <- lm(mpg ~ wt + hp, data = mtcars)
 
 # Print the summary of the model
 summary(model)
+```
 2. Check for Normality of Residuals
 We'll plot a histogram and a Q-Q plot of the residuals to visually inspect their distribution.
 ```
@@ -599,6 +633,7 @@ hist(model$residuals, main="Histogram of Residuals", xlab="Residuals")
 # Plot Q-Q plot of residuals
 qqnorm(model$residuals)
 qqline(model$residuals)
+```
 3. Check for Homoscedasticity
 We'll create a scatterplot of the residuals against the fitted (predicted) values.
 ```
@@ -607,6 +642,7 @@ plot(model$fitted.values, model$residuals,
      xlab="Fitted Values", ylab="Residuals", 
      main="Residuals vs Fitted Values")
 abline(h=0, col="red")  # Adds a horizontal line at zero
+```
 Explanation and Contrast
 •	Normality of Residuals:
 o	Visual Inspection: The histogram and Q-Q plot allow us to visually inspect the distribution of residuals. If the residuals are normally distributed, the histogram should look approximately bell-shaped, and the points in the Q-Q plot should fall approximately along the line.
@@ -691,6 +727,7 @@ removed.vars <- step.output[grep("(-)", step.output)]
 
 # Print the removed variables and reasons
 print(removed.vars)
+```
 Explanation:
 1.	Initial Model: We fit the initial model with all predictors using the lm() function.
 2.	Capture Output: We use capture.output() to capture the printed output of the step() function as it performs backward elimination.
@@ -719,6 +756,7 @@ for (col_name in names(data)) {
   print(summary(data[[col_name]]))
   cat("\n------------------------\n")
 }
+```
 2. Visualize Each Variable Based on Its Datatype
 ```
 # Loop to visualize each variable based on its datatype
@@ -748,6 +786,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	First Loop:
 o	We loop through each column in the dataset, printing the name of the variable and its summary statistics.
@@ -776,6 +815,7 @@ for (col_name in names(data)) {
   print(summary(data[[col_name]]))
   cat("\n------------------------\n")
 }
+```
 2. Visualize Each Variable Based on Its Datatype (updated)
 ```
 # Loop to visualize each variable based on its datatype
@@ -805,6 +845,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Key Update:
 •	Instead of using aes_string(), we directly use aes() and .data[[col_name]]. The .data pronoun is part of the rlang package's tidy evaluation framework and is used to refer to the data frame being used in the plot.
 •	The col_name is the variable name as a string, so .data[[col_name]] is used to refer to the column within the data frame.
@@ -829,6 +870,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Create Bivariate Summary Statistics
 ```
 # Loop through each variable to create bivariate summary statistics with Initial_days
@@ -864,6 +906,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	We loop through each column in the dataset, checking if it is numeric or categorical.
 •	For numeric variables, we calculate the correlation with "Initial_days" as an example of a bivariate statistic. You can add more statistics as needed.
@@ -890,6 +933,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Create Visualizations
 ```
 # Loop through each variable to create visualizations with Initial_days
@@ -929,6 +973,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	We have extended the loop to include the creation of ggplot objects (plot) that are appropriate for the type of data.
 •	For numeric variables, a scatter plot of the variable against "Initial_days" is created.
@@ -956,6 +1001,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Create Bivariate Summary Statistics
 ```
 # Loop through each variable to create bivariate summary statistics with Initial_days
@@ -996,6 +1042,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	The code is enhanced to compute mean and median of "Initial_days" for each level of categorical variables in the dataset.
 •	tapply() is used to apply a function (mean or median) over subsets of the vector "Initial_days" defined by the levels of the categorical variable.
@@ -1021,6 +1068,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Create Visualizations Based on Data Types
 ```
 # Loop through each variable to create visualizations with Initial_days
@@ -1062,6 +1110,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	Numeric Variables: We continue to use scatter plots for numeric variables to visualize the relationship between "Initial_days" and other numeric variables.
 •	Categorical Variables: We've introduced violin plots for visualizing the distribution of "Initial_days" across different levels of the categorical variable. Violin plots combine aspects of boxplots and density plots, providing a deeper understanding of the distribution. We also added jitter points to visualize individual data points. If you prefer box plots, you can replace geom_violin() with geom_boxplot().
@@ -1086,6 +1135,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Calculate Bivariate Summary Statistics and Visualizations
 ```
 # Loop through each variable to create bivariate summary statistics and visualizations with Initial_days
@@ -1140,6 +1190,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	The loop iterates through each variable in the dataset.
 •	If the variable is numeric, it calculates the correlation with "Initial_days" and visualizes the relationship with a scatter plot.
@@ -1166,6 +1217,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Calculate Bivariate Summary Statistics
 ```
 # Loop through each variable to create bivariate summary statistics with Initial_days
@@ -1203,6 +1255,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 3. Create Visualizations
 ```
 # Loop through each variable to create visualizations with Initial_days
@@ -1245,6 +1298,7 @@ for (col_name in names(data)) {
   print(plot)
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	The first loop is dedicated to calculating and displaying bivariate summary statistics.
 •	The second loop is solely for creating and displaying visualizations.
@@ -1269,6 +1323,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Calculate Bivariate Summary Statistics Including Chi-Square for Categorical Data
 ```
 # Loop through each variable to create bivariate summary statistics with Initial_days
@@ -1313,6 +1368,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 3. Visualizations Remain the Same
 The code for generating visualizations remains the same as in the previous example. No changes needed there.
 Explanation:
@@ -1340,6 +1396,7 @@ data <- data.frame(
 
 # Print head of the dataset to inspect its structure
 head(data)
+```
 2. Calculate Bivariate Summary Statistics Including ANOVA for Categorical Data
 ```
 # Loop through each variable to create bivariate summary statistics with Initial_days
@@ -1383,6 +1440,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 3. Visualizations Remain the Same
 The code for generating visualizations remains the same as in the previous example. No changes needed there.
 Explanation:
@@ -1437,6 +1495,7 @@ for (col_name in names(data)) {
   
   cat("\n------------------------\n")
 }
+```
 Explanation:
 •	I've changed the way we are creating the formula inside the aov() function. Now, it uses as.formula() to create a formula object dynamically based on the column name, avoiding the error you encountered.
 The rest of the code remains the same. Make sure to replace the dataset with your actual data and make necessary adjustments as per your specific requirements.
@@ -1454,6 +1513,7 @@ Here’s how you can convert the numeric variable into an ordered factor:
 # Converting the recoded numeric variable into an ordered factor
 data$Complication_risk <- factor(data$Complication_risk, levels = c(1, 2, 3), 
                                  labels = c("Low", "Medium", "High"), ordered = TRUE)
+```
 Consideration
 When dealing with ordinal data, one common approach is to keep them as numeric if the distances between the levels are assumed to be equal and meaningful. If this assumption is not appropriate, converting them to a factor (or ordered factor) might be a better option.
 Final Advice
@@ -1467,10 +1527,12 @@ Here’s a general approach:
 ```
 # Fit the linear model
 model <- lm(mpg ~ wt + hp + qsec, data = mtcars)
+```
 2. View the Summary
 ```
 # View the summary of the model
 summary(model)
+```
 3. Evaluate the P-values
 You will get a summary including the p-values for each coefficient. Evaluate these p-values against your chosen significance level.
 4. Setting the Significance Level
@@ -1487,6 +1549,7 @@ significant_coeff <- p_values < alpha
 
 # Print significant coefficients
 print(significant_coeff)
+```
 Explanation:
 •	We fit a linear model using lm().
 •	We set a significance level (alpha) to 0.05 or another desired value.
@@ -1507,6 +1570,7 @@ if (!requireNamespace("MASS", quietly = TRUE)) {
 # Load necessary libraries
 library(MASS)  # For truehist function
 library(ggplot2)
+```
 2. Create a Sample Dataset with No Significant Relationships
 ```
 # Create a dataset where predictors are not significantly related to the response
@@ -1516,6 +1580,7 @@ data <- data.frame(
   x1 = rnorm(100), # Random normal data for independent variable 1
   x2 = rnorm(100)  # Random normal data for independent variable 2
 )
+```
 3. Fit Initial Model
 ```
 # Fit an initial model with all predictors
@@ -1523,6 +1588,7 @@ initial.model <- lm(y ~ x1 + x2, data = data)
 
 # Print summary of the initial model
 summary(initial.model)
+```
 4. Apply Backward Elimination
 ```
 # Apply backward elimination using step function
@@ -1530,6 +1596,7 @@ final.model <- step(initial.model, direction = "backward")
 
 # Print summary of the final model
 summary(final.model)
+```
 In this example, y is not significantly related to x1 or x2 because they are all generated as random normal variables without any actual relationship. The step() function will likely end up with a model that includes only the intercept.
 5. Output
 You'll observe in the output that the step() function evaluates and potentially removes variables based on AIC, not p-values directly. If variables are not contributing to the model's explanatory power, they may be removed, leading to a simpler model.
@@ -1553,6 +1620,7 @@ data <- data.frame(
 # Print the first few rows of the original data
 cat("Original Data:\n")
 print(head(data))
+```
 2. Plot Original Data
 ```
 # Plot the original data
@@ -1560,6 +1628,7 @@ ggplot(data, aes(x = value)) +
   geom_histogram(binwidth = 2, fill = "skyblue", color = "black") +
   theme_minimal() +
   labs(title = "Original Data", x = "Value", y = "Frequency")
+```
 3. Standard Scaling of the Data
 ```
 # Standard scale the data (subtract mean and divide by standard deviation)
@@ -1569,6 +1638,7 @@ data <- data %>%
 # Print the first few rows of the scaled data
 cat("\nScaled Data:\n")
 print(head(data))
+```
 4. Plot Scaled Data
 ```
 # Plot the scaled data
@@ -1576,6 +1646,7 @@ ggplot(data, aes(x = scaled_value)) +
   geom_histogram(binwidth = 0.2, fill = "lightgreen", color = "black") +
   theme_minimal() +
   labs(title = "Standard Scaled Data", x = "Scaled Value", y = "Frequency")
+```
 Explanation:
 •	We first create a sample dataset data with a normally distributed variable having a mean of 50 and a standard deviation of 10.
 •	We then use the scale() function from base R to perform standard scaling. This function, by default, centers and scales the data, resulting in a transformed variable with a mean of 0 and a standard deviation of 1.
@@ -1601,6 +1672,7 @@ data <- data.frame(
 # Print the first few rows of the original data
 cat("Original Data:\n")
 print(head(data))
+```
 2. Standard Scaling of the Numeric Variables
 ```
 # Standard scale the numeric variables
@@ -1614,6 +1686,7 @@ data <- data %>%
 # Print the first few rows of the scaled data
 cat("\nScaled Data:\n")
 print(head(data))
+```
 3. Plot Scaled Data
 We will plot only the scaled numeric data, as the categorical data remains unchanged.
 ```
@@ -1628,6 +1701,7 @@ ggplot(data, aes(x = scaled_value2)) +
   geom_histogram(binwidth = 0.2, fill = "lightblue", color = "black") +
   theme_minimal() +
   labs(title = "Standard Scaled Data for Value2", x = "Scaled Value2", y = "Frequency")
+```
 Explanation:
 •	We added another numeric variable value2 and a categorical variable category to the dataset.
 •	We scaled both numeric variables using the scale() function.
@@ -1655,6 +1729,7 @@ data <- data.frame(
 # Print the first few rows of the original data
 cat("Original Data:\n")
 print(head(data))
+```
 2. Standard Scaling of the Numeric Variables and Replace Original Variables
 ```
 # Standard scale the numeric variables and replace the original variables
@@ -1667,6 +1742,7 @@ data <- data %>%
 # Print the first few rows of the data with original variables replaced by scaled versions
 cat("\nData with Scaled Numeric Variables Replacing Originals:\n")
 print(head(data))
+```
 3. Plot Scaled Data
 ```
 # Plot the scaled data for the first numeric variable
@@ -1680,6 +1756,7 @@ ggplot(data, aes(x = value2)) +
   geom_histogram(binwidth = 0.2, fill = "lightblue", color = "black") +
   theme_minimal() +
   labs(title = "Scaled Data for Value2", x = "Scaled Value2", y = "Frequency")
+```
 Explanation:
 •	We simply use the original variable names within the mutate() function to overwrite the original columns with the scaled data. The structure of the dataframe remains the same, but the values of the numeric variables are now scaled.
 •	This approach is often used to prepare data for machine learning algorithms that are sensitive to the scale of the input features, ensuring that all numeric features have a similar scale.
@@ -1704,10 +1781,12 @@ data <- data.frame(
 # Print the first few rows of the original data
 cat("Original Data:\n")
 print(head(data))
+```
 2. Specify the List of Continuous Variables to be Scaled
 ```
 # Specify the names of the continuous variables to scale
 continuous_vars <- c("value1", "value2", "value3")
+```
 3. Scale the Specified Continuous Variables
 ```
 # Scale the specified continuous variables
@@ -1717,6 +1796,7 @@ data <- data %>%
 # Print the first few rows of the data with scaled continuous variables
 cat("\nData with Specified Continuous Variables Scaled:\n")
 print(head(data))
+```
 4. Plot Scaled Data
 ```
 # Plot the scaled data for the continuous variables
@@ -1727,6 +1807,7 @@ for (var_name in continuous_vars) {
     labs(title = paste("Scaled Data for", var_name), x = "Scaled Value", y = "Frequency") +
     print()
 }
+```
 Explanation:
 •	We first specify the continuous variables to be scaled in a character vector continuous_vars.
 •	We then use mutate(across(all_of(continuous_vars), scale)) to scale those specified continuous variables. The across() function is used to apply a function across multiple columns, and all_of() is used to ensure that the variable names are treated as they are.
@@ -1742,7 +1823,8 @@ Here is an example of how to do this:
 
 # Example of fitting the initial model and performing backward elimination
 initial.model <- lm(mpg ~ ., data = train_data)  # Assuming 'mpg' is the dependent variable
-final.model <- step(initial.model, direction = "backward")
+final.model <- step(initial.model, direction = "backward
+```
 2. Prepare the Test Data
 ```
 # Assuming you have a dataframe 'test_data' with the same structure as 'train_data'
@@ -1751,6 +1833,7 @@ final.model <- step(initial.model, direction = "backward")
 # you need to apply the same transformations to the test dataset.
 # For example, if you have scaled 'value1' in training data, do the same for test data:
 test_data$value1 <- scale(test_data$value1)
+```
 3. Use Final Model to Predict on Test Data
 ```
 # Use the final model to make predictions on the test data
@@ -1758,6 +1841,7 @@ predictions <- predict(final.model, newdata = test_data)
 
 # Print out the predictions
 print(predictions)
+```
 Explanation:
 •	First, you train your model using your training dataset and get your final model after the backward elimination process.
 •	Then, ensure your test dataset is prepared in the same way as your training dataset (e.g., scaling, encoding).
@@ -1814,10 +1898,12 @@ Assuming final.model is your model and test_data is your test dataset, and the d
 ```
 # Predicting values on the test dataset
 predictions <- predict(final.model, newdata = test_data)
+```
 2. Add Predictions to Test Data for Easier Plotting
 ```
 # Adding the predicted values to the test data frame
 test_data$predicted <- predictions
+```
 3. Plot Actual vs Predicted Values
 ```
 # Load ggplot2 for plotting
@@ -1833,6 +1919,7 @@ ggplot(test_data, aes(x = actual, y = predicted)) +
     x = "Actual Values",
     y = "Predicted Values"
   )
+```
 In this code:
 •	We use the predict() function to get the predicted values for the test dataset.
 •	We add these predicted values to the test dataset for easier plotting.
