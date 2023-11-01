@@ -1,7 +1,9 @@
-Shared Chat•
-Advanced Data Analysis
-Variable Selection in Regression
+Shared Chat: Advanced Data Analysis - Variable Selection in Regression
+
+Brad Rhoads
+
 October 24, 2023
+
 In general, what is the strategy or process to determine which variables to include in a multiple linear regression?
 ChatGPT
 Selecting the right variables for a multiple linear regression model is crucial, as it impacts the model's performance and interpretability. Here are the general steps and strategies:
