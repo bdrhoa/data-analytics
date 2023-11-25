@@ -61,7 +61,7 @@ def nbib_to_bibtex(nbib_content):
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python script.py <file.nbib>")
+        print("Usage: python nbibtobib.py <file.nbib>")
         sys.exit(1)
 
     nbib_file = sys.argv[1]
