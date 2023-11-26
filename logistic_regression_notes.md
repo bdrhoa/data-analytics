@@ -104,4 +104,90 @@ for (col_name in names(data)) {
   cat("\n------------------------\n")
 }
 ```
+CONFUSION MATRIX
+
+```
+# Load necessary libraries
+library(ggplot2)
+library(caret)
+library(reshape2)
+
+# Actual and predicted data (as before)
+actual <- factor(c('Yes', 'No', 'Yes', 'Yes', 'No', 'No', 'Yes', 'No', 'No', 'Yes'))
+predicted <- factor(c('Yes', 'No', 'Yes', 'No', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Yes'))
+
+# Create the confusion matrix
+conf_matrix <- table(Predicted = predicted, Actual = actual)
+
+# Melt the confusion matrix
+melted_conf_matrix <- melt(conf_matrix)
+
+# Plot the heatmap
+ggplot(data = melted_conf_matrix, aes(x = Actual, y = Predicted, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  geom_text(aes(label = value), vjust = 1) +
+  labs(x = "Actual", y = "Predicted", fill = "Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+VISUALIZATIONS
+
+```
+install.packages(c("ggplot2", "vcd", "graphics", "reshape2"))
+library(ggplot2)
+library(vcd)
+library(graphics)
+library(reshape2)
+
+# Sample confusion matrix
+conf_matrix <- matrix(c(50, 10, 5, 35), nrow = 2, byrow = TRUE)
+dimnames(conf_matrix) <- list(Predicted = c("Positive", "Negative"), 
+                              Actual = c("Positive", "Negative"))
+
+```
+Heatmap
+```
+# Melting the matrix for ggplot
+melted_conf_matrix <- melt(conf_matrix)
+
+# Plotting the heatmap
+ggplot(data = melted_conf_matrix, aes(x = Actual, y = Predicted, fill = value)) +
+  geom_tile() +
+  geom_text(aes(label = value), vjust = 1) +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(x = "Actual", y = "Predicted", fill = "Count") +
+  theme_minimal()
+
+```
+Fourfold Plot
+```
+# Melting the matrix for ggplot
+melted_conf_matrix <- melt(conf_matrix)
+
+# Plotting the heatmap
+ggplot(data = melted_conf_matrix, aes(x = Actual, y = Predicted, fill = value)) +
+  geom_tile() +
+  geom_text(aes(label = value), vjust = 1) +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(x = "Actual", y = "Predicted", fill = "Count") +
+  theme_minimal()
+
+```
+Mosaic Plot
+```
+# Mosaic plot
+mosaicplot(conf_matrix, main = "Mosaic Plot of Confusion Matrix")
+
+```
+Bar Chart
+```
+# Bar plot
+barplot(as.matrix(conf_matrix), beside = TRUE, legend = rownames(conf_matrix),
+        args.legend = list(x = "topright"), col = c("lightblue", "salmon"),
+        xlab = "Actual", ylab = "Count", ylim = c(0, max(conf_matrix) * 1.5))
+
+```
 
