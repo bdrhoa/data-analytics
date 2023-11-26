@@ -1,3 +1,6 @@
+Logistic Regression Notes
+Brad Rhoads
+11/25/202
 
 When comparing a binary, categorical variable like ReAdmis to other variables, the approach is somewhat different from comparing continuous variables. This is because the statistical methods used for categorical data analysis differ from those used for continuous data.
 
@@ -305,4 +308,463 @@ data_clean <- data[-influential_points, ]
 # Reset row names
 row.names(data_clean) <- NULL
 ```
+LOGISTIC ACCURACY
+```
+# Assuming you have a dataset `data` with predictors and a binary response variable `outcome`
 
+# Split the data into training and test sets (e.g., 70% training, 30% test)
+set.seed(123) # for reproducibility
+training_indices <- sample(1:nrow(data), 0.7 * nrow(data))
+train_data <- data[training_indices, ]
+test_data <- data[-training_indices, ]
+
+# Fit logistic regression model
+model <- glm(outcome ~ ., data = train_data, family = "binomial")
+
+# Predict on test data
+predictions_prob <- predict(model, test_data, type = "response")
+predictions <- ifelse(predictions_prob > 0.5, 1, 0)
+
+# Calculate accuracy
+actual <- test_data$outcome
+accuracy <- sum(predictions == actual) / length(actual)
+
+print(accuracy)
+
+```
+RECODE GENDER TO MODE
+```
+# Your dataset
+# df <- ...
+
+# Function to calculate mode
+get_mode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+# Calculate mode for gender excluding 'Nonbinary'
+mode_gender <- get_mode(df$gender[df$gender != "Nonbinary"])
+
+# Recode 'Nonbinary' to mode gender
+df$gender[df$gender == "Nonbinary"] <- mode_gender
+
+```
+Logarithms are a fundamental concept in mathematics, particularly useful in solving equations involving exponential terms. Here's a basic explanation:
+
+Definition: A logarithm is the inverse operation to exponentiation. Just as division is the inverse of multiplication, logarithms are the inverse of raising a number to a power. For example, if you have 
+2
+3
+=
+8
+2 
+3
+ =8, then you can express this as a logarithm: 
+log
+⁡
+2
+8
+=
+3
+log 
+2
+​
+ 8=3. This reads as "the logarithm of 8 with base 2 is 3".
+
+Base of a Logarithm: The base of a logarithm is the number that is raised to a power. In the example 
+log
+⁡
+2
+8
+=
+3
+log 
+2
+​
+ 8=3, the base is 2. Common bases are 10 (common logarithm, denoted as 
+log
+⁡
+log) and 
+�
+e (natural logarithm, denoted as 
+ln
+⁡
+ln), where 
+�
+e is an irrational and transcendental number approximately equal to 2.71828.
+
+Calculating Logarithms: The value of a logarithm answers the question: "To what power must the base be raised, to produce this number?" In the example 
+log
+⁡
+2
+8
+log 
+2
+​
+ 8, we are asking "What power must 2 be raised to, to get 8?" and the answer is 3.
+
+Properties of Logarithms:
+
+Product Rule: 
+log
+⁡
+�
+(
+�
+×
+�
+)
+=
+log
+⁡
+�
+�
++
+log
+⁡
+�
+�
+log 
+b
+​
+ (M×N)=log 
+b
+​
+ M+log 
+b
+​
+ N
+Quotient Rule: 
+log
+⁡
+�
+(
+�
+�
+)
+=
+log
+⁡
+�
+�
+−
+log
+⁡
+�
+�
+log 
+b
+​
+ ( 
+N
+M
+​
+ )=log 
+b
+​
+ M−log 
+b
+​
+ N
+Power Rule: 
+log
+⁡
+�
+(
+�
+�
+)
+=
+�
+×
+log
+⁡
+�
+�
+log 
+b
+​
+ (M 
+p
+ )=p×log 
+b
+​
+ M
+Applications: Logarithms are used in many areas including science, engineering, and finance. They are particularly helpful in dealing with exponential growth or decay, such as in population studies, radioactive decay, and interest calculations.
+
+Understanding logarithms can be a bit challenging at first, but they're a powerful tool once you get the hang of them. They essentially allow us to work with very large or very small numbers in a more manageable way and solve equations that would be difficult or impossible to solve using just arithmetic operations.
+
+User
+Now explain log(Odds)
+Share
+Save
+ChatGPT
+Log odds, often encountered in statistics and probability theory, is a concept that combines the ideas of logarithms and odds. Here's an explanation:
+
+Understanding Odds: Odds are a way of expressing probability. Given an event with a probability 
+�
+P of occurring, the odds of the event are given as 
+�
+1
+−
+�
+1−P
+P
+​
+ . In simpler terms, odds compare the probability of an event happening to the probability of it not happening.
+
+Log Odds: Log odds is simply the logarithm of the odds. If the odds are given as 
+�
+=
+�
+1
+−
+�
+O= 
+1−P
+P
+​
+ , then the log odds are 
+log
+⁡
+(
+�
+)
+log(O). The base of the logarithm can vary, but in many contexts, especially in logistic regression (a statistical method), the natural logarithm is used. This would make the log odds 
+ln
+⁡
+(
+�
+1
+−
+�
+)
+ln( 
+1−P
+P
+​
+ ).
+
+Interpretation and Use:
+
+In Statistics: Log odds are a central part of logistic regression, a type of regression analysis used for predicting the outcome of a categorical dependent variable based on one or more predictor variables. The log odds are used as the response variable.
+As a Transformation: Converting probabilities to log odds is a way of transforming a variable that can range between 0 and 1 (i.e., probabilities) to a variable that can take any value from negative infinity to positive infinity. This can simplify certain types of statistical analysis and model-building.
+Interpreting Values: Positive log odds indicate that an event is more likely to occur than not, and negative log odds indicate that an event is less likely to occur than not. A log odds of 0 indicates that an event is equally likely to occur or not occur (i.e., the event has a 50% probability).
+Advantages: One of the main advantages of using log odds is that it can handle situations where the outcome is binary (i.e., it can happen or not happen), which is common in many practical situations. This transformation to log odds makes the relationship between variables more linear and easier to model, especially in logistic regression.
+
+In summary, log odds is a logarithmic transformation of the odds of an event, widely used in statistical modeling and analysis, particularly when dealing with binary outcomes. It helps in interpreting and modeling probabilities in a more mathematically convenient and interpretable format.
+
+User
+Tell me more about how log odds are related to logistic regression.
+Share
+Save
+ChatGPT
+Log odds play a crucial role in logistic regression, a statistical method used for modeling the probability of a binary outcome. Here's how log odds are related to logistic regression:
+
+Binary Outcomes: Logistic regression is used when the dependent variable is binary—meaning it has only two possible outcomes, often coded as 0 and 1 (e.g., "no" and "yes", "fail" and "pass", "healthy" and "sick").
+
+Modeling Probabilities: The goal of logistic regression is to model the probability that the dependent variable is in a particular category (usually the "1" or "yes" category) based on one or more independent variables.
+
+Logit Function: The logistic regression model uses the logit function, which is the logarithm of the odds of the dependent variable being in a particular category. If 
+�
+P is the probability of the outcome, the logit function is defined as:
+
+logit
+(
+�
+)
+=
+ln
+⁡
+(
+�
+1
+−
+�
+)
+logit(P)=ln( 
+1−P
+P
+​
+ )
+This is the natural log of the odds, as discussed earlier.
+
+Linear Relationship: The key advantage of using log odds (logit function) in logistic regression is that it creates a linear relationship between the independent variables and the log odds of the dependent variable. The general form of the logistic regression model is:
+
+ln
+⁡
+(
+�
+1
+−
+�
+)
+=
+�
+0
++
+�
+1
+�
+1
++
+�
+2
+�
+2
++
+…
++
+�
+�
+�
+�
+ln( 
+1−P
+P
+​
+ )=β 
+0
+​
+ +β 
+1
+​
+ X 
+1
+​
+ +β 
+2
+​
+ X 
+2
+​
+ +…+β 
+n
+​
+ X 
+n
+​
+ 
+Here, 
+�
+0
+,
+�
+1
+,
+…
+,
+�
+�
+β 
+0
+​
+ ,β 
+1
+​
+ ,…,β 
+n
+​
+  are the parameters of the model, and 
+�
+1
+,
+�
+2
+,
+…
+,
+�
+�
+X 
+1
+​
+ ,X 
+2
+​
+ ,…,X 
+n
+​
+  are the independent variables.
+
+Sigmoid Function: The output of the logistic regression model can be transformed back to a probability using the sigmoid function (also known as the logistic function). The sigmoid function is the inverse of the logit function and is given by:
+
+�
+(
+�
+)
+=
+1
+1
++
+�
+−
+�
+σ(x)= 
+1+e 
+−x
+ 
+1
+​
+ 
+where 
+�
+x is the linear combination of independent variables (
+�
+0
++
+�
+1
+�
+1
++
+…
++
+�
+�
+�
+�
+β 
+0
+​
+ +β 
+1
+​
+ X 
+1
+​
+ +…+β 
+n
+​
+ X 
+n
+​
+ ). The sigmoid function maps any real-valued number into the range (0, 1), making it suitable for probability.
+
+Interpretation of Coefficients: In logistic regression, interpreting the coefficients involves understanding the change in log odds. A one-unit increase in an independent variable 
+�
+�
+X 
+i
+​
+  results in a change in the log odds of the dependent variable by 
+�
+�
+β 
+i
+​
+ , holding other variables constant.
+
+Applications: Logistic regression is widely used in various fields, such as medicine (e.g., predicting the likelihood of a disease), finance (e.g., credit scoring), marketing (e.g., predicting customer behavior), and many more areas where predicting binary outcomes is essential.
+
+In summary, logistic regression models the log odds of a binary outcome as a linear combination of independent variables. This approach provides a powerful way to understand the relationships between variables and to predict binary outcomes in various practical scenarios.
+
+
+
+References:
+https://chat.openai.com/c/5c780ac8-08bb-4a12-989c-07b4f3db3f9f
+https://chat.openai.com/c/bd230a8c-5f51-4416-9fd4-2c4eb9f5a73b
+https://chat.openai.com/c/1fc14325-7723-4995-8f54-91fbe12cda13
+https://chat.openai.com/c/71ed0cca-b400-4076-8b28-95020f91744b
+https://chat.openai.com/c/123fc548-16d8-479e-995f-5e11878d38c0
+https://chat.openai.com/c/098218aa-5a84-486d-a32a-b98c6d7cfa7f
