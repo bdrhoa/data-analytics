@@ -106,13 +106,14 @@ Naive Bayes is a probabilistic machine learning algorithm based on Bayes' Theore
 Bayes' Theorem provides a way to calculate the probability of a class given some observed features, using prior knowledge about the class and the features. The theorem is expressed as:
 
 ```math
-P(class∣data)=P(data∣class)×P(class)P(data)P(class|data) = \frac{P(data|class) \times P(class)}{P(data)}P(class∣data)=P(data)P(data∣class)×P(class)​
+P(class|data) = \frac{P(data|class) \times P(class)}{P(data)}
 ```
 Where: 
 - P(class∣data)P(class|data)P(class∣data) is the posterior probability of the class (target) given the predictors (attributes). 
 - P(data∣class)P(data|class)P(data∣class) is the likelihood which is the probability of predictor given class. 
 - P(class)P(class)P(class) is the prior probability of the class. 
 - P(data)P(data)P(data) is the prior probability of the predictor.
+
 #### Types of Naive Bayes
 
 There are mainly three types of Naive Bayes models: 
