@@ -1,3 +1,7 @@
+#Spectral Density Notes
+#Brad Rhoads
+#5/25/2024
+
 Explain spectral density in terms of time series analysis. Provide references and a python example.
 ChatGPT
 Spectral Density in Time Series Analysis
